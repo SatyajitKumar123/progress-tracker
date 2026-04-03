@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Satyajit — 8 Week Dev Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0c0c;
+  --surface: #141414;
+  --surface2: #1a1a1a;
+  --border: #222;
+  --border2: #2a2a2a;
+  --text: #e8e4dc;
+  --muted: #555;
+  --muted2: #3a3a3a;
+  --accent: #c8f064;
+  --accent-dim: rgba(200,240,100,0.08);
+  --accent-border: rgba(200,240,100,0.2);
+  --done: #3a3a3a;
+  --done-text: #555;
+  --django: #44cf6c;
+  --drf: #64b5f6;
+  --git: #ffb347;
+  --docker: #4fc3f7;
+  --linux: #ce93d8;
+  --jobs: #f48fb1;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Lora', serif;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* Subtle scanline texture */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── HEADER ── */
+.hero {
+  padding: 64px 32px 48px;
+  max-width: 960px;
+  margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.hero-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+h1 span {
+  color: var(--accent);
+}
+
+.hero-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 16px;
+  letter-spacing: 0.05em;
+}
+
+/* Progress ring */
+.progress-ring-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 120px;
+}
+
+.ring-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.ring-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.ring-container svg {
+  transform: rotate(-90deg);
+}
+
+.ring-bg { fill: none; stroke: var(--border2); stroke-width: 6; }
+.ring-fill {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
+  transition: stroke-dashoffset 0.8s ease;
+}
+
+.ring-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring-pct {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.ring-total {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+}
+
+/* Stats bar */
+.stats-bar {
+  display: flex;
+  gap: 0;
+  margin-top: 36px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.stat {
+  flex: 1;
+  padding: 14px 20px;
+  border-right: 1px solid var(--border);
+}
+
+.stat:last-child { border-right: none; }
+
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ── DAILY SCHEDULE ── */
+.schedule-section {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px 32px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-eyebrow::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.time-block {
+  background: var(--surface);
+  padding: 16px;
+}
+
+.time-block.accent-block {
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-border);
+  margin: -1px;
+}
+
+.time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.time-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.time-desc {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ── MAIN CONTENT ── */
+.main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px 32px 100px;
+}
+
+/* Week header */
+.week-block {
+  margin-bottom: 56px;
+  animation: fadeUp 0.4s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.week-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.week-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+
+.week-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  flex: 1;
+}
+
+.week-progress-bar {
+  height: 3px;
+  background: var(--border2);
+  border-radius: 2px;
+  width: 80px;
+  overflow: hidden;
+}
+
+.week-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.5s ease;
+}
+
+/* Day rows */
+.day-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin-bottom: 2px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  background: var(--surface);
+}
+
+.day-row:hover {
+  border-color: var(--border2);
+}
+
+.day-row.completed {
+  background: var(--bg);
+  border-color: var(--border);
+}
+
+.day-row.completed .day-title {
+  text-decoration: line-through;
+  color: var(--done-text);
+}
+
+.day-row.completed .day-detail {
+  color: var(--muted2);
+}
+
+.day-row.completed .day-label {
+  color: var(--muted2);
+}
+
+/* Checkbox area */
+.day-check {
+  width: 52px;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  transition: background 0.15s;
+}
+
+.day-row:hover .day-check {
+  background: var(--surface2);
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--muted);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.day-row.completed .checkmark {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.checkmark svg {
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.day-row.completed .checkmark svg {
+  opacity: 1;
+}
+
+/* Day content */
+.day-content {
+  flex: 1;
+  padding: 14px 16px;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.day-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 2px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.day-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+  transition: color 0.15s;
+}
+
+.day-detail {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  width: 100%;
+  padding-top: 2px;
+  line-height: 1.5;
+}
+
+/* Bucket colors */
+.tag-django  { background: rgba(68,207,108,0.1);  color: var(--django);  border: 1px solid rgba(68,207,108,0.2); }
+.tag-drf     { background: rgba(100,181,246,0.1); color: var(--drf);    border: 1px solid rgba(100,181,246,0.2); }
+.tag-git     { background: rgba(255,179,71,0.1);  color: var(--git);    border: 1px solid rgba(255,179,71,0.2); }
+.tag-docker  { background: rgba(79,195,247,0.1);  color: var(--docker); border: 1px solid rgba(79,195,247,0.2); }
+.tag-linux   { background: rgba(206,147,216,0.1); color: var(--linux);  border: 1px solid rgba(206,147,216,0.2); }
+.tag-jobs    { background: rgba(244,143,177,0.1); color: var(--jobs);   border: 1px solid rgba(244,143,177,0.2); }
+.tag-review  { background: rgba(200,240,100,0.08); color: var(--accent); border: 1px solid var(--accent-border); }
+.tag-js      { background: rgba(255,220,80,0.1);  color: #ffd850;       border: 1px solid rgba(255,220,80,0.2); }
+
+/* Special repeat row */
+.day-row.repeat-row {
+  border-style: dashed;
+}
+
+/* Motivation banner */
+.motive-banner {
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-border);
+  border-radius: 2px;
+  padding: 20px 24px;
+  margin-bottom: 48px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.motive-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.motive-text {
+  font-family: 'Lora', serif;
+  font-size: 14px;
+  color: var(--text);
+  font-style: italic;
+  line-height: 1.7;
+}
+
+.motive-attr {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 8px;
+  font-style: normal;
+}
+
+/* Reset button */
+.reset-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.15s;
+}
+
+.reset-btn:hover {
+  border-color: var(--muted);
+  color: var(--text);
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.today-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--bg);
+  background: var(--accent);
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 2px;
+  font-weight: 500;
+  transition: opacity 0.15s;
+}
+
+.today-btn:hover { opacity: 0.85; }
+
+/* Scrollspy highlight */
+.week-block.active-week .week-num {
+  background: var(--accent-dim);
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+/* Legend */
+.legend {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 1px;
+}
+
+/* Sticky nav */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(12,12,12,0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 32px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.nav-item {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 4px 10px;
+  border-radius: 2px;
+  white-space: nowrap;
+  transition: all 0.15s;
+  border: 1px solid transparent;
+}
+
+.nav-item:hover {
+  color: var(--text);
+  border-color: var(--border2);
+}
+
+.nav-item.active {
+  color: var(--accent);
+  border-color: var(--accent-border);
+  background: var(--accent-dim);
+}
+
+.nav-sep {
+  color: var(--border2);
+  font-size: 16px;
+}
+
+/* Confetti animation */
+@keyframes confetti-pop {
+  0%   { transform: scale(0) rotate(0deg); opacity: 1; }
+  50%  { transform: scale(1.3) rotate(10deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.confetti { animation: confetti-pop 0.3s ease; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .hero { padding: 40px 20px 32px; }
+  .main { padding: 32px 20px 80px; }
+  .schedule-section { padding: 32px 20px; }
+  .sticky-nav { padding: 10px 20px; }
+  .stats-bar { flex-wrap: wrap; }
+  .stat { min-width: 120px; }
+}
+</style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="sticky-nav" id="stickyNav">
+  <a class="nav-item active" href="#schedule">Schedule</a>
+  <span class="nav-sep">·</span>
+  <a class="nav-item" href="#w1">W1</a>
+  <a class="nav-item" href="#w2">W2</a>
+  <a class="nav-item" href="#w3">W3</a>
+  <a class="nav-item" href="#w4">W4</a>
+  <a class="nav-item" href="#w5">W5</a>
+  <a class="nav-item" href="#w6">W6</a>
+  <a class="nav-item" href="#w7">W7</a>
+  <a class="nav-item" href="#w8">W8</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-top">
+    <div>
+      <div class="hero-label">// satyajit kumar — 8 week roadmap</div>
+      <h1>From <span>Grinding</span><br>to <span>Hired.</span></h1>
+      <p class="hero-sub">Django · DRF · Git · Docker · Linux · Jobs<br>10:30am every day. No exceptions.</p>
+    </div>
+    <div class="progress-ring-wrap">
+      <div class="ring-label">Overall</div>
+      <div class="ring-container">
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <circle class="ring-bg" cx="50" cy="50" r="45"/>
+          <circle class="ring-fill" id="ringFill" cx="50" cy="50" r="45"/>
+        </svg>
+        <div class="ring-text">
+          <div class="ring-pct" id="ringPct">0%</div>
+          <div class="ring-total" id="ringTotal">0/0</div>
+        </div>
+      </div>
+      <div class="ring-label" id="doneCount">tasks done</div>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-num" id="statWeek">0</div>
+      <div class="stat-label">Weeks Done</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="statDjango">0</div>
+      <div class="stat-label">Django Days</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="statApps">0</div>
+      <div class="stat-label">App Days</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="statStreak">0🔥</div>
+      <div class="stat-label">Day Streak</div>
+    </div>
+  </div>
+
+  <div class="hero-actions">
+    <button class="today-btn" onclick="scrollToNextTask()">→ Next Task</button>
+    <button class="reset-btn" onclick="confirmReset()">Reset Progress</button>
+  </div>
+</div>
+
+<!-- DAILY SCHEDULE -->
+<div class="schedule-section" id="schedule">
+  <div class="section-eyebrow">Daily Schedule</div>
+  <div class="schedule-grid">
+    <div class="time-block">
+      <div class="time">07:00 – 08:00</div>
+      <div class="time-title">Wake Up + Exercise</div>
+      <div class="time-desc">Sacred. Never skip.<br>This is your mental reset.</div>
+    </div>
+    <div class="time-block">
+      <div class="time">08:00 – 09:00</div>
+      <div class="time-title">Breakfast + Light Phone</div>
+      <div class="time-desc">Okay to relax here.<br>Not study time. Refuel.</div>
+    </div>
+    <div class="time-block">
+      <div class="time">09:00 – 10:30</div>
+      <div class="time-title">Rest if needed</div>
+      <div class="time-desc">No guilt. Your brain<br>is recharging for the sprint.</div>
+    </div>
+    <div class="time-block accent-block">
+      <div class="time">10:30 – 12:30 🔴</div>
+      <div class="time-title">Deep Work Block 1</div>
+      <div class="time-desc">Today's syllabus topic.<br>Screen 1: code. Screen 2: docs.<br>Phone in another room.</div>
+    </div>
+    <div class="time-block">
+      <div class="time">12:30 – 14:00</div>
+      <div class="time-title">Lunch + Real Rest</div>
+      <div class="time-desc">Earned it. Guilt-free.<br>Watch something. Eat well.</div>
+    </div>
+    <div class="time-block accent-block">
+      <div class="time">14:00 – 16:00 🟡</div>
+      <div class="time-title">Deep Work Block 2</div>
+      <div class="time-desc">Apply today's concept<br>directly into TradeMind.<br>Always connected to real code.</div>
+    </div>
+    <div class="time-block">
+      <div class="time">16:00 – 17:00 🟢</div>
+      <div class="time-title">Free Build Time</div>
+      <div class="time-desc">JS, Rust, curiosity.<br>No rules. You earned this.<br>Follow the fun.</div>
+    </div>
+    <div class="time-block">
+      <div class="time">17:00 – 20:00</div>
+      <div class="time-title">Away from Screen</div>
+      <div class="time-desc">Walk. Family. Fresh air.<br>Recovery = tomorrow's focus.</div>
+    </div>
+    <div class="time-block">
+      <div class="time">20:00 – 20:30</div>
+      <div class="time-title">Read Zero to One</div>
+      <div class="time-desc">20 pages/night.<br>Feed the business brain.</div>
+    </div>
+    <div class="time-block accent-block">
+      <div class="time">20:30 – 21:00</div>
+      <div class="time-title">Day Review</div>
+      <div class="time-desc">Write 2 lines in notebook:<br>What did I do today?<br>What does tomorrow start with?</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN SYLLABUS -->
+<div class="main">
+
+  <div class="motive-banner">
+    <div class="motive-icon">🧠</div>
+    <div>
+      <div class="motive-text">"Read it → Write it on whiteboard → Code it → Delete it → Code it again → Tweak it → Use it in TradeMind. When Stage 4 feels boring — you're ready for the next topic."</div>
+      <div class="motive-attr">// Your learning system. Trust it.</div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#44cf6c"></div>Django</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#64b5f6"></div>DRF</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ffb347"></div>Git</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#4fc3f7"></div>Docker</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ce93d8"></div>Linux</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f48fb1"></div>Jobs</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#c8f064"></div>Review</div>
+  </div>
+
+  <!-- WEEK 1 -->
+  <div class="week-block" id="w1">
+    <div class="week-header">
+      <div class="week-num">Week 01</div>
+      <div class="week-title">Django — Core Foundations</div>
+      <div class="week-progress-bar"><div class="week-progress-fill" id="wp-w1"></div></div>
+    </div>
+    <div class="days-list">
+      <div class="day-row" onclick="toggle(this)" data-bucket="django" data-week="w1">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-django">Django</span>
+          <span class="day-title">Project Structure — What Every File Does and Why</span>
+          <span class="day-detail">Create fresh project. Explain settings.py, urls.py, wsgi.py, manage.py out loud to yourself. Write file tree on whiteboard.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="django" data-week="w1">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-django">Django</span>
+          <span class="day-title">Models — Fields, Relationships, Migrations</span>
+          <span class="day-detail">OneToOne, ForeignKey, ManyToMany. Write 3 different model sets. Run migrations each time. Draw ER diagram on whiteboard.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="django" data-week="w1">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-django">Django</span>
+          <span class="day-title">Migrations Deep Dive — What Happens Underneath</span>
+          <span class="day-detail">makemigrations vs migrate. Inspect migration files. Fake migrations. Squash. Write the flow on whiteboard before touching keyboard.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="django" data-week="w1">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-django">Django</span>
+          <span class="day-title">ORM — CRUD 10 Different Ways</span>
+          <span class="day-detail">create(), save(), bulk_create(). get(), filter(), exclude(). update(), delete(). Write same query 3 different ways each. No copy-paste.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="django" data-week="w1">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-django">Django</span>
+          <span class="day-title">ORM — filter, exclude, annotate, aggregate</span>
+          <span class="day-detail">Count(), Sum(), Avg(), Max(). Q objects. F expressions. select_related vs prefetch_related. Apply each to TradeMind models.</span>
+        </div>
+      </div>
+      <div class="day-row repeat-row" onclick="toggle(this)" data-bucket="review" data-week="w1">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-review">Review Day</span>
+          <span class="day-title">Repeat Week 1 From Memory — Whiteboard Only</span>
+          <span class="day-detail">No notes. No docs. Write everything you remember. Gaps = what you revise. This is the most important day of the week.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 2 -->
+  <div class="week-block" id="w2">
+    <div class="week-header">
+      <div class="week-num">Week 02</div>
+      <div class="week-title">Django — Views, URLs, Templates, Forms</div>
+      <div class="week-progress-bar"><div class="week-progress-fill" id="wp-w2"></div></div>
+    </div>
+    <div class="days-list">
+      <div class="day-row" onclick="toggle(this)" data-bucket="django" data-week="w2">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-django">Django</span>
+          <span class="day-title">Views — FBV vs CBV, When to Use Which</span>
+          <span class="day-detail">Build same view both ways. Draw request → view → response on whiteboard. Write CBV inheritance chain from memory.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="django" data-week="w2">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-django">Django</span>
+          <span class="day-title">URLs — include(), Namespacing, Dynamic Paths</span>
+          <span class="day-detail">path() vs re_path(). App namespaces. Reverse URLs. Build multi-app URL config from scratch 3 times.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="django" data-week="w2">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-django">Django</span>
+          <span class="day-title">Templates — Context, Tags, Filters</span>
+          <span class="day-detail">{% for %}, {% if %}, {% block %}, {% extends %}. Custom template tags. Pass TradeMind data to a template page.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="django" data-week="w2">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-django">Django</span>
+          <span class="day-title">Forms — ModelForm, Validation, save()</span>
+          <span class="day-detail">clean() methods. Custom validators. is_valid() flow. Build a trade entry form for TradeMind.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="django" data-week="w2">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-django">Django</span>
+          <span class="day-title">Django Admin — Register, Customize, list_display</span>
+          <span class="day-detail">list_display, list_filter, search_fields, readonly_fields. Register all TradeMind models. Add custom actions.</span>
+        </div>
+      </div>
+      <div class="day-row repeat-row" onclick="toggle(this)" data-bucket="review" data-week="w2">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-review">Review Day</span>
+          <span class="day-title">Repeat Week 2 From Memory — Whiteboard Only</span>
+          <span class="day-detail">Whiteboard: FBV vs CBV diagram, URL flow, template inheritance tree. Code one complete view-url-template chain from scratch.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 3 -->
+  <div class="week-block" id="w3">
+    <div class="week-header">
+      <div class="week-num">Week 03</div>
+      <div class="week-title">Django — Advanced + Auth + Build Day</div>
+      <div class="week-progress-bar"><div class="week-progress-fill" id="wp-w3"></div></div>
+    </div>
+    <div class="days-list">
+      <div class="day-row" onclick="toggle(this)" data-bucket="django" data-week="w3">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-django">Django</span>
+          <span class="day-title">Signals — pre_save, post_save, When to Use vs Avoid</span>
+          <span class="day-detail">Connect signals. Disconnect. Avoid signal hell. Add a TradeMind signal that logs whenever a trade is saved.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="django" data-week="w3">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-django">Django</span>
+          <span class="day-title">Middleware — What It Is, Write One Custom</span>
+          <span class="day-detail">Middleware order matters. Write a request logging middleware for TradeMind. Draw the middleware stack on whiteboard.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="django" data-week="w3">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-django">Django</span>
+          <span class="day-title">Settings — Dev vs Prod, Environment Variables</span>
+          <span class="day-detail">Split settings files. python-decouple or django-environ. Never hardcode secrets. Apply to TradeMind.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="django" data-week="w3">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-django">Django</span>
+          <span class="day-title">Django Auth — User Model, Login, Logout, Permissions</span>
+          <span class="day-detail">AbstractUser vs AbstractBaseUser. Custom user model. Groups and permissions. Add user-scoped data to TradeMind.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="linux" data-week="w3">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-linux">Linux</span>
+          <span class="day-title">Linux Week — Navigation + Permissions + Processes</span>
+          <span class="day-detail">ls/cd/mkdir/rm/cp/mv until automatic. chmod/chown. ps/kill/top. Run Django via terminal only this week. No GUI.</span>
+        </div>
+      </div>
+      <div class="day-row repeat-row" onclick="toggle(this)" data-bucket="django" data-week="w3">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-review">Build Day 🔨</span>
+          <span class="day-title">Build One Complete Django App From Scratch — No Help</span>
+          <span class="day-detail">Pick any idea. Models, views, urls, templates, auth, admin. Complete in one day. This proves Week 1-3 landed. This is your milestone.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 4 -->
+  <div class="week-block" id="w4">
+    <div class="week-header">
+      <div class="week-num">Week 04</div>
+      <div class="week-title">DRF — Serializers, Views, Auth</div>
+      <div class="week-progress-bar"><div class="week-progress-fill" id="wp-w4"></div></div>
+    </div>
+    <div class="days-list">
+      <div class="day-row" onclick="toggle(this)" data-bucket="drf" data-week="w4">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-drf">DRF</span>
+          <span class="day-title">Serializers — ModelSerializer, Validation, create/update</span>
+          <span class="day-detail">validate_field(). validate(). SerializerMethodField. Write TradeMind serializers 3x from scratch. No copy-paste.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="drf" data-week="w4">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-drf">DRF</span>
+          <span class="day-title">APIView — GET, POST, PUT, DELETE From Scratch</span>
+          <span class="day-detail">request.data, request.method. Response(). Status codes. Build full CRUD for TradeMind trades endpoint.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="drf" data-week="w4">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-drf">DRF</span>
+          <span class="day-title">ViewSets + Routers — Write Same API Both Ways</span>
+          <span class="day-detail">ModelViewSet vs APIView. When each makes sense. DefaultRouter. Build TradeMind API both ways, feel the difference.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="drf" data-week="w4">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-drf">DRF</span>
+          <span class="day-title">Permissions — IsAuthenticated, IsOwner, Custom</span>
+          <span class="day-detail">Write 2 custom permissions. Object-level permissions. Apply ownership check to TradeMind so users only see their trades.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="drf" data-week="w4">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-drf">DRF</span>
+          <span class="day-title">Authentication — SessionAuth, TokenAuth, JWT</span>
+          <span class="day-detail">SimpleJWT — access + refresh tokens. Token rotation. Add JWT to TradeMind. Test with Postman or HTTPie.</span>
+        </div>
+      </div>
+      <div class="day-row repeat-row" onclick="toggle(this)" data-bucket="review" data-week="w4">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-review">Review Day</span>
+          <span class="day-title">Repeat All 5 DRF Topics From Memory</span>
+          <span class="day-detail">Whiteboard: DRF request lifecycle diagram. Then build serializer + APIView + JWT auth from scratch, no notes.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 5 -->
+  <div class="week-block" id="w5">
+    <div class="week-header">
+      <div class="week-num">Week 05</div>
+      <div class="week-title">DRF Advanced + Git Mastery</div>
+      <div class="week-progress-bar"><div class="week-progress-fill" id="wp-w5"></div></div>
+    </div>
+    <div class="days-list">
+      <div class="day-row" onclick="toggle(this)" data-bucket="drf" data-week="w5">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-drf">DRF</span>
+          <span class="day-title">Nested Serializers — Read vs Write, SerializerMethodField</span>
+          <span class="day-detail">Writable nested. source parameter. Depth option. Build trade with nested portfolio data in TradeMind API.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="drf" data-week="w5">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-drf">DRF</span>
+          <span class="day-title">Filtering — django-filter, SearchFilter, OrderingFilter</span>
+          <span class="day-detail">FilterSet. Multiple filters combined. Add filtering to TradeMind — filter trades by symbol, date range, status.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="drf" data-week="w5">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-drf">DRF</span>
+          <span class="day-title">Pagination — PageNumber, LimitOffset, Cursor</span>
+          <span class="day-detail">Custom page sizes. Override get_paginated_response(). Add pagination to TradeMind trade list endpoint.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="git" data-week="w5">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-git">Git</span>
+          <span class="day-title">Git — init, add, commit, log, diff, branch, merge</span>
+          <span class="day-detail">Write every command by hand first on whiteboard. Create deliberate merge conflicts. Resolve them. Rebase vs merge — draw the difference.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="git" data-week="w5">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-git">Git</span>
+          <span class="day-title">Git — Remote, Push, Pull, .gitignore, Professional README</span>
+          <span class="day-detail">Connect TradeMind to GitHub properly. Write a real README: what it does, why, tech stack, how to run. Pin it. This is your portfolio now.</span>
+        </div>
+      </div>
+      <div class="day-row repeat-row" onclick="toggle(this)" data-bucket="drf" data-week="w5">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-review">Build Day 🔨</span>
+          <span class="day-title">Rebuild TradeMind API Completely From Scratch — No Old Code</span>
+          <span class="day-detail">Full DRF API. Auth, permissions, filtering, pagination. One day. If you can build it from memory, you can explain it in any interview.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 6 -->
+  <div class="week-block" id="w6">
+    <div class="week-header">
+      <div class="week-num">Week 06</div>
+      <div class="week-title">Docker — Containerize Everything</div>
+      <div class="week-progress-bar"><div class="week-progress-fill" id="wp-w6"></div></div>
+    </div>
+    <div class="days-list">
+      <div class="day-row" onclick="toggle(this)" data-bucket="docker" data-week="w6">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-docker">Docker</span>
+          <span class="day-title">Container vs VM — Draw It Until It's Obvious</span>
+          <span class="day-detail">Whiteboard first. Images vs containers. Layers. Why Docker? Run hello-world. Pull official Python image. Inspect it.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="docker" data-week="w6">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-docker">Docker</span>
+          <span class="day-title">Dockerfile — Write One for TradeMind From Scratch</span>
+          <span class="day-detail">FROM, WORKDIR, COPY, RUN, CMD, EXPOSE. Multi-stage build. Write it 3 times. Understand every line.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="docker" data-week="w6">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-docker">Docker</span>
+          <span class="day-title">Docker Commands — build, run, ps, logs, exec, stop</span>
+          <span class="day-detail">Run every command manually. exec into a running container. Read logs. Kill containers. Write cheatsheet on whiteboard.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="docker" data-week="w6">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-docker">Docker</span>
+          <span class="day-title">Docker Compose — Django + PostgreSQL + Redis</span>
+          <span class="day-detail">services, networks, depends_on. Write compose file for TradeMind. Draw the container network on whiteboard before coding.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="docker" data-week="w6">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-linux">Linux</span>
+          <span class="day-title">Linux — Networking + Shell Script + Bash Automation</span>
+          <span class="day-detail">curl, wget, netstat, ssh basics. Write a bash script that does git add + commit + push in one command. Use it daily from now.</span>
+        </div>
+      </div>
+      <div class="day-row repeat-row" onclick="toggle(this)" data-bucket="docker" data-week="w6">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-review">Milestone 🎯</span>
+          <span class="day-title">TradeMind Fully Dockerized — Runs With One Command</span>
+          <span class="day-detail">docker compose up and it works. Django + DB + Redis + Celery all running. This is interview-ready infrastructure. Screenshot it for LinkedIn.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 7 -->
+  <div class="week-block" id="w7">
+    <div class="week-header">
+      <div class="week-num">Week 07</div>
+      <div class="week-title">Apply Hard — Job Search Sprint</div>
+      <div class="week-progress-bar"><div class="week-progress-fill" id="wp-w7"></div></div>
+    </div>
+    <div class="days-list">
+      <div class="day-row" onclick="toggle(this)" data-bucket="jobs" data-week="w7">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-jobs">Jobs</span>
+          <span class="day-title">LinkedIn Profile Overhaul — Headline, About, Featured</span>
+          <span class="day-detail">Keyword-stuffed headline. About section as landing page. Pin TradeMind + GitHub. Set Open to Work (Recruiters Only).</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="jobs" data-week="w7">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-jobs">Jobs</span>
+          <span class="day-title">Top 20 Django Interview Questions — Write All Answers</span>
+          <span class="day-detail">On whiteboard. Out loud. Django ORM, signals, middleware, DRF ViewSet vs APIView, JWT, select_related, Celery basics. Every one.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="jobs" data-week="w7">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-jobs">Jobs</span>
+          <span class="day-title">Application Batch 1 — 15 Companies Targeted and Applied</span>
+          <span class="day-detail">Wellfound + LinkedIn. Filter: Python/Django, 0-2 yrs, remote, company size 1-50. Keyword-match resume to each JD before submitting.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="jobs" data-week="w7">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-jobs">Jobs</span>
+          <span class="day-title">Recruiter Outreach Batch — 10 DMs Sent</span>
+          <span class="day-detail">Find hiring managers via LinkedIn People search. Use the comment-before-connect strategy. Reference TradeMind with a specific GitHub link.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="jobs" data-week="w7">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-jobs">Jobs</span>
+          <span class="day-title">First LinkedIn Post — Build in Public</span>
+          <span class="day-detail">"Built X in TradeMind, here's one interesting technical decision I made." 5 sentences. Imperfect is fine. Post it. This is non-negotiable.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="jobs" data-week="w7">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-jobs">Jobs</span>
+          <span class="day-title">System Design Basics — URL Shortener + Notification System</span>
+          <span class="day-detail">Junior level only. Draw on whiteboard. How would you design it with Django? What DB? What cache? What async? Practice explaining out loud.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEEK 8 -->
+  <div class="week-block" id="w8">
+    <div class="week-header">
+      <div class="week-num">Week 08</div>
+      <div class="week-title">Full Blitz — Apply, Polish, Ship</div>
+      <div class="week-progress-bar"><div class="week-progress-fill" id="wp-w8"></div></div>
+    </div>
+    <div class="days-list">
+      <div class="day-row" onclick="toggle(this)" data-bucket="jobs" data-week="w8">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-jobs">Jobs</span>
+          <span class="day-title">Application Batch 2 — 15 More Companies</span>
+          <span class="day-detail">Follow up on Week 7 applications with no reply. Send 15 new ones. Check Cutshort, Instahyre, Hirect — different pools than LinkedIn.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="jobs" data-week="w8">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-jobs">Jobs</span>
+          <span class="day-title">TradeMind — Deploy Live on Railway or Render</span>
+          <span class="day-detail">Free tier. Working URL. Add it to your LinkedIn, resume, GitHub. A live demo converts 3× better than a GitHub link alone.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="jobs" data-week="w8">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-jobs">Jobs</span>
+          <span class="day-title">Mock Interview — Answer Top 20 Questions Out Loud, Timed</span>
+          <span class="day-detail">Record yourself on phone. Watch it back. Sounds painful. Do it anyway. Catch the gaps before an interviewer does.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="jobs" data-week="w8">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-jobs">Jobs</span>
+          <span class="day-title">Second LinkedIn Post + Community Engagement</span>
+          <span class="day-detail">Post about your Docker setup or the TradeMind FIFO engine. Engage with 5 developers building similar things. Your network starts here.</span>
+        </div>
+      </div>
+      <div class="day-row" onclick="toggle(this)" data-bucket="jobs" data-week="w8">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-jobs">Jobs</span>
+          <span class="day-title">Recruiter Outreach Batch 2 — 10 More DMs</span>
+          <span class="day-detail">International companies this time. Wellfound → filter remote → DM the founding engineer or CTO directly. Small companies, big access.</span>
+        </div>
+      </div>
+      <div class="day-row repeat-row" onclick="toggle(this)" data-bucket="review" data-week="w8">
+        <div class="day-check"><div class="checkmark"><svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4L4.5 7.5L11 1" stroke="#0c0c0c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="day-content">
+          <span class="day-label tag-review">End of Roadmap 🏁</span>
+          <span class="day-title">Review Everything — What's Next, Keep Going</span>
+          <span class="day-detail">Count: applications sent, DMs sent, posts published, commits made. You are not the same developer who started Week 1. Plan the next 8 weeks.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── DATA ──
+const STORAGE_KEY = 'satyajit_roadmap_v1';
+
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch { return {}; }
+}
+
+function saveState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+// ── INIT ──
+let state = loadState();
+
+function getTaskId(row) {
+  const week = row.dataset.week;
+  const bucket = row.dataset.bucket;
+  const title = row.querySelector('.day-title').textContent.trim().slice(0, 30);
+  return `${week}_${bucket}_${title}`;
+}
+
+function toggle(row) {
+  const id = getTaskId(row);
+  if (state[id]) {
+    delete state[id];
+    row.classList.remove('completed');
+  } else {
+    state[id] = { ts: Date.now() };
+    row.classList.add('completed');
+    row.querySelector('.checkmark').classList.add('confetti');
+    setTimeout(() => row.querySelector('.checkmark').classList.remove('confetti'), 400);
+  }
+  saveState(state);
+  updateAll();
+}
+
+function restoreState() {
+  document.querySelectorAll('.day-row').forEach(row => {
+    const id = getTaskId(row);
+    if (state[id]) row.classList.add('completed');
+  });
+  updateAll();
+}
+
+// ── STATS ──
+function updateAll() {
+  const allRows = document.querySelectorAll('.day-row');
+  const total = allRows.length;
+  const done = document.querySelectorAll('.day-row.completed').length;
+  const pct = total ? Math.round((done / total) * 100) : 0;
+
+  // Ring
+  const circumference = 283;
+  const offset = circumference - (pct / 100) * circumference;
+  document.getElementById('ringFill').style.strokeDashoffset = offset;
+  document.getElementById('ringPct').textContent = pct + '%';
+  document.getElementById('ringTotal').textContent = done + '/' + total;
+
+  // Stats
+  const djangoDone = document.querySelectorAll('.day-row.completed[data-bucket="django"]').length;
+  const jobsDone = document.querySelectorAll('.day-row.completed[data-bucket="jobs"]').length;
+
+  // Weeks fully completed
+  let weeksDone = 0;
+  ['w1','w2','w3','w4','w5','w6','w7','w8'].forEach(w => {
+    const wRows = document.querySelectorAll(`.day-row[data-week="${w}"]`);
+    const wDone = document.querySelectorAll(`.day-row.completed[data-week="${w}"]`).length;
+    if (wRows.length > 0 && wRows.length === wDone) weeksDone++;
+  });
+
+  document.getElementById('statWeek').textContent = weeksDone;
+  document.getElementById('statDjango').textContent = djangoDone;
+  document.getElementById('statApps').textContent = jobsDone;
+
+  // Streak (days with at least one completion)
+  const dayMap = {};
+  Object.values(state).forEach(v => {
+    if (v.ts) {
+      const d = new Date(v.ts).toDateString();
+      dayMap[d] = true;
+    }
+  });
+  let streak = 0;
+  const today = new Date();
+  for (let i = 0; i < 100; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    if (dayMap[d.toDateString()]) streak++;
+    else if (i > 0) break;
+  }
+  document.getElementById('statStreak').textContent = streak + '🔥';
+
+  // Week progress bars
+  ['w1','w2','w3','w4','w5','w6','w7','w8'].forEach(w => {
+    const wRows = document.querySelectorAll(`.day-row[data-week="${w}"]`);
+    const wDone = document.querySelectorAll(`.day-row.completed[data-week="${w}"]`).length;
+    const wPct = wRows.length ? (wDone / wRows.length) * 100 : 0;
+    const bar = document.getElementById(`wp-${w}`);
+    if (bar) bar.style.width = wPct + '%';
+  });
+}
+
+// ── SCROLL TO NEXT ──
+function scrollToNextTask() {
+  const next = document.querySelector('.day-row:not(.completed)');
+  if (next) {
+    next.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    next.style.transition = 'border-color 0.3s';
+    next.style.borderColor = 'rgba(200,240,100,0.6)';
+    setTimeout(() => { next.style.borderColor = ''; }, 1200);
+  }
+}
+
+// ── RESET ──
+function confirmReset() {
+  if (confirm('Reset all progress? This cannot be undone.')) {
+    state = {};
+    saveState(state);
+    document.querySelectorAll('.day-row').forEach(r => r.classList.remove('completed'));
+    updateAll();
+  }
+}
+
+// ── NAV HIGHLIGHT ──
+function updateNav() {
+  const weeks = ['schedule','w1','w2','w3','w4','w5','w6','w7','w8'];
+  const navItems = document.querySelectorAll('.nav-item');
+  let current = 'schedule';
+  weeks.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 120) current = id;
+  });
+  navItems.forEach(item => {
+    const href = item.getAttribute('href').replace('#','');
+    item.classList.toggle('active', href === current);
+  });
+}
+
+window.addEventListener('scroll', updateNav, { passive: true });
+
+// ── BOOT ──
+restoreState();
+updateNav();
+</script>
+</body>
+</html>
